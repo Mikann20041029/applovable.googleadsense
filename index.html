@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mikanntool Docs | 実用ガイド集</title>
+  <meta name="description" content="Web運用・GitHub Pages・DNS・自動化の実用ガイドを、初心者でも迷わない手順でまとめています。" />
+  <link rel="canonical" href="https://mikanntool.com/" />
+  <style>
+    :root { --bg:#0b1020; --card:#121a33; --text:#e8ecff; --muted:#a9b3e6; --line:#22305f; --link:#9bb6ff; }
+    body{ margin:0; font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans JP",sans-serif; background:linear-gradient(180deg,#070a14,#0b1020 50%,#070a14); color:var(--text); }
+    a{ color:var(--link); text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+    header{ border-bottom:1px solid var(--line); background:rgba(10,14,28,.85); position:sticky; top:0; backdrop-filter:blur(10px); }
+    .wrap{ max-width:980px; margin:0 auto; padding:18px 16px; }
+    nav{ display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
+    .brand{ font-weight:700; letter-spacing:.2px; margin-right:10px; }
+    .pill{ padding:8px 10px; border:1px solid var(--line); border-radius:999px; background:rgba(18,26,51,.5); }
+    main{ padding:26px 0 44px; }
+    .hero{ padding:18px; border:1px solid var(--line); border-radius:16px; background:radial-gradient(800px 300px at 20% 0%, rgba(155,182,255,.25), transparent), rgba(18,26,51,.55); }
+    h1{ margin:0 0 10px; font-size:22px; }
+    .grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px; margin-top:14px; }
+    .card{ padding:14px; border:1px solid var(--line); border-radius:14px; background:rgba(18,26,51,.45); }
+    .card h2{ margin:0 0 8px; font-size:16px; }
+    .muted{ color:var(--muted); }
+    footer{ border-top:1px solid var(--line); color:var(--muted); padding:18px 0 30px; }
+    ul{ margin:10px 0 0; padding-left:20px; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <nav>
+      <div class="brand">Mikanntool Docs</div>
+      <a class="pill" href="guides.html">ガイド</a>
+      <a class="pill" href="about.html">運営者情報</a>
+      <a class="pill" href="contact.html">お問い合わせ</a>
+      <a class="pill" href="privacy.html">プライバシー</a>
+      <a class="pill" href="terms.html">利用規約・免責</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>「迷わず実行できる」Web運用ガイド集</h1>
+    <p class="muted">
+      このサイトは、Webサイト運用・GitHub Pages・DNS設定・自動化の基本を、
+      初心者でも手順通りに進めれば再現できる形で整理したドキュメントです。
+      特定サービスの宣伝は目的にしておらず、必要な操作だけを短く・正確にまとめます。
+    </p>
+    <ul class="muted">
+      <li>「何を」「どこで」「どの順で」やるかだけに絞った手順</li>
+      <li>やってはいけない典型ミスも同じページに明記</li>
+      <li>運用者情報・問い合わせ先・プライバシー開示を常設</li>
+    </ul>
+  </section>
+
+  <section class="grid">
+    <article class="card">
+      <h2><a href="guides.html#dns">DNSの基本（A/CNAME）</a></h2>
+      <p class="muted">独自ドメインを正しく向けるために必要な最小知識と手順。</p>
+    </article>
+    <article class="card">
+      <h2><a href="guides.html#ghpages">GitHub Pages公開</a></h2>
+      <p class="muted">リポジトリ作成→Pages有効化→公開確認まで。</p>
+    </article>
+    <article class="card">
+      <h2><a href="guides.html#adsense">AdSense準備チェック</a></h2>
+      <p class="muted">必須ページ・サイト構造・ads.txtなどの“落ちる典型”を回避。</p>
+    </article>
+    <article class="card">
+      <h2><a href="guides.html#ops">運用の最低限</a></h2>
+      <p class="muted">リンク切れ、空ページ、未完成表示を出さない。これだけで事故が減ります。</p>
+    </article>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>© Mikanntool Docs</div>
+    <div class="muted">重要ページ： <a href="privacy.html">プライバシー</a> / <a href="terms.html">利用規約・免責</a> / <a href="contact.html">お問い合わせ</a></div>
+  </div>
+</footer>
+</body>
+</html>
