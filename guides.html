@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ガイド | Mikanntool Docs</title>
+  <meta name="description" content="DNS、GitHub Pages、AdSense準備の実用ガイド。" />
+  <link rel="canonical" href="https://mikanntool.com/guides.html" />
+  <style>
+    :root { --bg:#0b1020; --card:#121a33; --text:#e8ecff; --muted:#a9b3e6; --line:#22305f; --link:#9bb6ff; }
+    body{ margin:0; font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans JP",sans-serif; background:#0b1020; color:var(--text); }
+    a{ color:var(--link); text-decoration:none; } a:hover{ text-decoration:underline; }
+    header{ border-bottom:1px solid var(--line); background:rgba(10,14,28,.9); position:sticky; top:0; backdrop-filter:blur(10px); }
+    .wrap{ max-width:980px; margin:0 auto; padding:18px 16px; }
+    nav{ display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
+    .brand{ font-weight:700; margin-right:10px; }
+    .pill{ padding:8px 10px; border:1px solid var(--line); border-radius:999px; background:rgba(18,26,51,.5); }
+    .box{ margin-top:14px; padding:16px; border:1px solid var(--line); border-radius:14px; background:rgba(18,26,51,.45); }
+    h1{ margin:0 0 6px; font-size:20px; }
+    h2{ margin:0 0 8px; font-size:16px; }
+    .muted{ color:var(--muted); }
+    code{ background:rgba(155,182,255,.12); padding:2px 6px; border-radius:6px; }
+    ul{ margin:10px 0 0; padding-left:20px; }
+    footer{ border-top:1px solid var(--line); color:var(--muted); padding:18px 0 30px; margin-top:28px; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <nav>
+      <div class="brand"><a href="index.html">Mikanntool Docs</a></div>
+      <a class="pill" href="guides.html">ガイド</a>
+      <a class="pill" href="about.html">運営者情報</a>
+      <a class="pill" href="contact.html">お問い合わせ</a>
+      <a class="pill" href="privacy.html">プライバシー</a>
+      <a class="pill" href="terms.html">利用規約・免責</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <h1>ガイド</h1>
+  <p class="muted">このページは「迷わず再現する」ことに特化しています。難しい理屈は最低限にし、操作の順番だけを固定します。</p>
+
+  <section id="dns" class="box">
+    <h2>DNSの基本（A / CNAME）</h2>
+    <p class="muted">
+      独自ドメインをGitHub Pagesに向ける時、よくある失敗は「どこに向けるか」を混ぜることです。
+      基本は「ルート（@）」と「www」を分けて考えます。
+    </p>
+    <ul class="muted">
+      <li><b>Aレコード</b>：ドメイン（@）をIPアドレスへ向ける</li>
+      <li><b>CNAME</b>：www などを別名（github.io等）へ向ける</li>
+      <li>反映には時間がかかることがあるので、変更後すぐに焦らない</li>
+    </ul>
+  </section>
+
+  <section id="ghpages" class="box">
+    <h2>GitHub Pagesで公開する（このリポジトリ方式）</h2>
+    <p class="muted">
+      <code>ユーザー名.github.io</code> 形式のリポジトリは、公開URLのルートがそのままリポジトリ直下になります。
+      ルート直下に <code>ads.txt</code> を置きたい場合にも都合が良いです。
+    </p>
+    <ul class="muted">
+      <li>リポジトリの Settings → Pages</li>
+      <li>Source: Deploy from a branch</li>
+      <li>Branch: main / (root) を選んで Save</li>
+      <li>表示されたURLへアクセスして、ページが出れば公開完了</li>
+    </ul>
+  </section>
+
+  <section id="adsense" class="box">
+    <h2>AdSense準備チェック（落ちる典型を潰す）</h2>
+    <p class="muted">
+      AdSenseはサイト審査があり、承認されるまで広告を表示できません。
+      そしてプライバシーポリシーでは「第三者がCookie等を使う」開示が求められます。
+    </p>
+    <ul class="muted">
+      <li>運営者情報・問い合わせ・プライバシー・免責が常に辿れる</li>
+      <li>空ページ、工事中、リンク切れが無い</li>
+      <li>コピー寄せ集めではなく、手順が自分の言葉で書かれている</li>
+      <li><code>ads.txt</code> をルートに置ける構成にしておく（後でpub IDを入れる）</li>
+    </ul>
+    <p class="muted">※プライバシー開示の要件はGoogle側のポリシーに明記があります。</p>
+  </section>
+
+  <section id="ops" class="box">
+    <h2>運用の最低限（審査前に必ずやる）</h2>
+    <ul class="muted">
+      <li>全ページがメニューから1クリックで行ける</li>
+      <li>誤字リンク（404）をゼロにする</li>
+      <li>ページ表示が極端に重い要素（無意味な動画・大量外部スクリプト）を入れない</li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="muted">重要ページ： <a href="privacy.html">プライバシー</a> / <a href="terms.html">利用規約・免責</a> / <a href="contact.html">お問い合わせ</a></div>
+  </div>
+</footer>
+</body>
+</html>
