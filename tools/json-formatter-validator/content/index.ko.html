@@ -1,0 +1,54 @@
+<h2>Quick answer</h2>
+<p>
+JSON이 실패하는 가장 흔한 원인은 <strong>후행 쉼표</strong>, <strong>키 따옴표 누락</strong>, <strong>작은따옴표 사용</strong>, <strong>괄호 불일치</strong>입니다.
+왼쪽에 붙여넣고 <strong>검증</strong>을 눌러 오류(가능하면 줄/열)를 확인한 뒤, <strong>정렬</strong>(가독성) 또는 <strong>축소</strong>(용량 감소)를 사용하세요.
+</p>
+
+<h2>사용 방법</h2>
+<ol>
+  <li>입력창에 JSON을 붙여넣습니다. 필요하면 <strong>예시</strong>로 정상 JSON을 불러옵니다.</li>
+  <li><strong>검증</strong>을 눌러 strict JSON 문법을 확인합니다. 오류가 있으면 메시지와 위치를 표시합니다.</li>
+  <li><strong>정렬</strong>로 보기 좋게, <strong>축소</strong>로 공백을 제거해 전송용으로 만듭니다.</li>
+  <li><strong>키 정렬</strong>은 텍스트 비교가 중요한 시스템에서는 주의해서 사용합니다.</li>
+  <li>결과는 복사/다운로드할 수 있고, 입력은 브라우저에 로컬 저장됩니다.</li>
+</ol>
+<p class="muted">개인정보: 모든 처리는 브라우저에서만 수행되며 입력은 서버로 전송되지 않습니다.</p>
+
+<h2>유효한 JSON의 규칙</h2>
+<ul>
+  <li>키는 반드시 큰따옴표: <code>{"name":"A"}</code></li>
+  <li>문자열도 큰따옴표만 허용</li>
+  <li>후행 쉼표 금지: <code>{"a":1,}</code> 는 실패</li>
+  <li>주석 금지: <code>//</code>, <code>/* */</code> 불가</li>
+</ul>
+
+<h2>Examples</h2>
+<pre><code>Input: {"a":1,"b":2}
+Output:
+{
+  "a": 1,
+  "b": 2
+}</code></pre>
+
+<h2>Troubleshooting</h2>
+<ul>
+  <li>후행 쉼표 제거</li>
+  <li>작은따옴표 → 큰따옴표</li>
+  <li>키 따옴표 추가</li>
+  <li>주석 제거</li>
+  <li>백슬래시 이스케이프(\\)</li>
+  <li>문자열 내 줄바꿈은 \n</li>
+  <li>괄호 닫힘 확인</li>
+  <li>NaN/Infinity 사용 금지</li>
+  <li>UTF-8 저장 권장</li>
+  <li>잘린 JSON 복구</li>
+</ul>
+
+<h2>References</h2>
+<ul>
+  <li><a href="https://www.rfc-editor.org/rfc/rfc8259" rel="nofollow">RFC 8259</a></li>
+  <li><a href="https://www.ecma-international.org/publications-and-standards/standards/ecma-404/" rel="nofollow">ECMA-404</a></li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse" rel="nofollow">MDN JSON.parse</a></li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" rel="nofollow">MDN JSON.stringify</a></li>
+  <li><a href="https://json-schema.org/" rel="nofollow">JSON Schema</a></li>
+</ul>

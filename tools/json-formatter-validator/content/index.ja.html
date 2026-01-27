@@ -1,0 +1,148 @@
+<h2>結論（Quick answer）</h2>
+<p>
+JSONが通らない原因の大半は、<strong>末尾カンマ</strong>・<strong>キーのダブルクォート忘れ</strong>・<strong>シングルクォート</strong>・<strong>括弧の対応ミス</strong>です。
+左に貼り付けて <strong>検証</strong> を押し、エラー（多くの場合は行/列つき）を見て修正し、最後に <strong>整形</strong>（読みやすく）または <strong>最小化</strong>（軽量化）を使って仕上げます。
+</p>
+
+<h2>このツールの使い方</h2>
+<ol>
+  <li>入力欄にJSONを貼り付けます。迷ったら <strong>サンプル</strong> を押して、正しいJSONを入れてから試します。</li>
+  <li><strong>検証</strong> を押し、strict JSONとして正しいか判定します。誤りがあればメッセージと行/列（可能な場合）を表示します。</li>
+  <li><strong>整形</strong> で読みやすい形にし、<strong>最小化</strong> で空白を消してサイズを減らせます。</li>
+  <li><strong>キーを並び替える</strong> は、文字列比較をするシステムでは差分が大きくなるので、必要なときだけ使います。</li>
+  <li><strong>コピー</strong> / <strong>ダウンロード</strong> で結果を保存できます。入力はブラウザ内に自動保存されます。</li>
+</ol>
+<p class="muted">プライバシー：処理はブラウザ内だけで完結し、入力はサーバーへ送信されません。</p>
+
+<h2>「有効なJSON」とは何か（重要）</h2>
+<p>
+ネット上の“JSONっぽい”例は、実はstrict JSONではないことがよくあります。strict JSONは仕様（RFC 8259 / ECMA-404）に従います。
+ここを理解すると、APIデバッグや設定ファイルで毎回同じミスを繰り返さなくなります。
+</p>
+
+<h3>ルール：JSONの型は6つだけ</h3>
+<ul>
+  <li>オブジェクト：<code>{ "key": "value" }</code></li>
+  <li>配列：<code>[1, 2, 3]</code></li>
+  <li>文字列：<code>"text"</code>（ダブルクォートのみ）</li>
+  <li>数値：<code>0</code>, <code>-12.34</code>, <code>1e6</code>（有限）</li>
+  <li>真偽値：<code>true</code>/<code>false</code></li>
+  <li>null：<code>null</code></li>
+</ul>
+<p><code>undefined</code> や <code>NaN</code>、<code>Infinity</code>、関数、<code>new Date()</code> はJSONではありません。</p>
+
+<h3>ルール：キーは必ずダブルクォート</h3>
+<pre><code>NG: { name: "Alice" }
+OK: { "name": "Alice" }</code></pre>
+
+<h3>ルール：文字列はダブルクォート</h3>
+<pre><code>NG: { "name": 'Alice' }
+OK: { "name": "Alice" }</code></pre>
+
+<h3>ルール：末尾カンマ禁止</h3>
+<pre><code>NG:
+{ "a": 1, }
+
+OK:
+{ "a": 1 }</code></pre>
+
+<h3>ルール：コメント禁止</h3>
+<p><code>//</code> や <code>/* */</code> はJSONにありません。JSONC対応の環境以外は落ちます。</p>
+
+<h2>典型エラーの直し方（順番が大事）</h2>
+<ol>
+  <li>まず <strong>検証</strong>。メッセージと位置（行/列）を見る。</li>
+  <li>その位置の文字を確認（余計なカンマ、足りないクォート、括弧ミスが多い）。</li>
+  <li><code>{}</code> と <code>[]</code> の対応を確認。</li>
+  <li>1つ直したらすぐ再検証。まとめて直すと原因が分からなくなります。</li>
+</ol>
+
+<h2>具体例（8つ以上）</h2>
+<p class="muted">入力→出力の例です。入力欄に貼って「整形」を押すと同じ形になります。</p>
+<pre><code>例1 Input:
+{"name":"Alice","active":true,"age":29}
+
+Output:
+{
+  "name": "Alice",
+  "active": true,
+  "age": 29
+}</code></pre>
+<pre><code>例2 Input:
+{"tags":["json","format","validate"],"scores":[1,2,3]}</code></pre>
+<pre><code>例3 Input:
+{"message":"She said: \"hello\"."}</code></pre>
+<pre><code>例4 Input:
+{"path":"C:\\Users\\Alice\\Documents\\file.txt"}</code></pre>
+<pre><code>例5 Input:
+{"ok":false,"value":null,"enabled":true}</code></pre>
+<pre><code>例6 Input:
+{"user":{"id":"12345678901234567890","name":"Aki"},"roles":["admin","editor"]}</code></pre>
+<pre><code>例7 NG:
+{"a":1,"b":2,}
+Fix:
+{"a":1,"b":2}</code></pre>
+<pre><code>例8 NG:
+{"a":1 "b":2}
+Fix:
+{"a":1,"b":2}</code></pre>
+
+<h2>Troubleshooting（10個以上）</h2>
+<ul>
+  <li>末尾カンマを消す（<code>}</code>/<code>]</code> の直前）。</li>
+  <li>シングルクォートをダブルクォートへ。</li>
+  <li>キーを必ずダブルクォートで囲む。</li>
+  <li>コメントを削除する（JSONCは別物）。</li>
+  <li>バックスラッシュは <code>\\</code> にする。</li>
+  <li>文字列内改行は <code>\n</code> にする。</li>
+  <li>コピー漏れで末尾の括弧が落ちていないか。</li>
+  <li><code>[]</code> と <code>{}</code> を混同していないか。</li>
+  <li><code>NaN</code>/<code>Infinity</code> を使っていないか。</li>
+  <li>UTF-8で保存されているか（別エンコーディングで崩れるケース）。</li>
+</ul>
+
+<h2>FAQ（10個以上）</h2>
+<ul>
+  <li><strong>安全？</strong>：ブラウザ内処理のみで、入力は送信されません。</li>
+  <li><strong>コメントは？</strong>：標準JSONは不可です。</li>
+  <li><strong>末尾カンマは？</strong>：不可です。</li>
+  <li><strong>整形と最小化の違い</strong>：読みやすさ vs サイズ。</li>
+  <li><strong>キー並び替え</strong>：意味は変えませんが、文字列比較の差分は変わります。</li>
+  <li><strong>Schema検証</strong>：ここは構文のみ。形の検証はJSON Schemaで別途。</li>
+  <li><strong>大きいID</strong>：数値だと丸められることがあるので文字列推奨。</li>
+  <li><strong>日付</strong>：JSONに日付型はないのでISO文字列推奨。</li>
+  <li><strong>Content-Type</strong>：APIは <code>application/json; charset=utf-8</code> が一般的。</li>
+  <li><strong>Unexpected end</strong>：括弧/クォートが閉じていません。</li>
+</ul>
+
+<h2>用語集（10語以上）</h2>
+<ul>
+  <li><strong>JSON</strong>：データ交換のテキスト形式。</li>
+  <li><strong>Object</strong>：<code>{}</code> のキー/値。</li>
+  <li><strong>Array</strong>：<code>[]</code> の順序付きリスト。</li>
+  <li><strong>Escape</strong>：<code>\n</code> や <code>\"</code> など。</li>
+  <li><strong>Minify</strong>：空白削除。</li>
+  <li><strong>Pretty print</strong>：整形。</li>
+  <li><strong>Schema</strong>：構造ルール。</li>
+  <li><strong>UTF-8</strong>：一般的な文字コード。</li>
+  <li><strong>Trailing comma</strong>：末尾カンマ。</li>
+  <li><strong>Strict</strong>：仕様に厳密なパース。</li>
+</ul>
+
+<h2>関連ツール（5つ）</h2>
+<ul>
+  <li>JSON to CSV Converter — スプレッドシート向けに変換</li>
+  <li>CSV to JSON Converter — CSVをJSON配列へ</li>
+  <li>JSON Schema Validator — 形の検証</li>
+  <li>JWT Decoder — JWT payloadのJSON確認</li>
+  <li>Base64 Encoder/Decoder — 文字列のエンコード/デコード</li>
+</ul>
+
+<h2>参考リンク（公式中心）</h2>
+<ul>
+  <li><a href="https://www.rfc-editor.org/rfc/rfc8259" rel="nofollow">RFC 8259</a></li>
+  <li><a href="https://www.ecma-international.org/publications-and-standards/standards/ecma-404/" rel="nofollow">ECMA-404</a></li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse" rel="nofollow">MDN JSON.parse</a></li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" rel="nofollow">MDN JSON.stringify</a></li>
+  <li><a href="https://json-schema.org/" rel="nofollow">JSON Schema</a></li>
+</ul>

@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Privacy — JSON Formatter & Validator</title>
+  <meta name="description" content="Format and validate JSON in your browser. Pretty print, minify, sort keys, and find errors by line/column." />
+  <link rel="canonical" href="https://mikanntool.com/tools/json-formatter-validator/privacy.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="JSON Formatter & Validator" />
+  <meta property="og:description" content="Format and validate JSON in your browser. Error line/column, minify, copy/download, examples, troubleshooting." />
+  <meta property="og:url" content="https://mikanntool.com/tools/json-formatter-validator/privacy.html" />
+  <meta name="twitter:card" content="summary" />
+
+  <!-- AdSense (optional for ownership/ads). Replace client if needed. -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5643751507480712"
+    crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="assets/site.css" />
+</head>
+<body data-page="privacy">
+<header>
+  <div class="container">
+    <div class="navbar">
+      <div class="brand">Mikanntool</div>
+      <nav class="navlinks" aria-label="Primary">
+        <a class="pill" href="./" data-i18n="nav.home"></a>
+        <a class="pill" href="about.html" data-i18n="nav.about"></a>
+        <a class="pill" href="all-tools.html" data-i18n="nav.all_tools"></a>
+        <a class="pill" href="contact.html" data-i18n="nav.contact"></a>
+        <div class="lang">
+          <span class="pill" data-i18n="lang.label"></span>
+          <select id="langSelect" class="pill" aria-label="Language">
+            <option value="en" data-i18n="lang.en">English</option>
+            <option value="ja" data-i18n="lang.ja">日本語</option>
+            <option value="ko" data-i18n="lang.ko">한국어</option>
+            <option value="zh" data-i18n="lang.zh">中文</option>
+          </select>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <div class="breadcrumbs">
+    <a href="./" data-i18n="breadcrumbs.home"></a> ›
+    <a href="all-tools.html" data-i18n="breadcrumbs.tools"></a> ›
+    <span data-i18n="breadcrumbs.current"></span>
+  </div>
+
+  <section class="card">
+    <div class="card-inner hero">
+      <div class="h-title" data-i18n="tool.title"></div>
+      <p class="h-sub" data-i18n="tool.subtitle"></p>
+    </div>
+  </section>
+
+  <div class="grid">
+    <section class="card">
+      <div class="card-inner">
+        <label class="label" for="jsonInput" data-i18n="tool.input_label"></label>
+        <textarea id="jsonInput" spellcheck="false" autocapitalize="off" autocomplete="off"></textarea>
+
+        <div class="controls">
+          <button id="btnFormat" type="button" data-i18n="tool.btn.format"></button>
+          <button id="btnMinify" type="button" data-i18n="tool.btn.minify"></button>
+          <button id="btnValidate" type="button" data-i18n="tool.btn.validate"></button>
+          <button id="btnSample" type="button" data-i18n="tool.btn.sample"></button>
+          <button id="btnClear" type="button" data-i18n="tool.btn.clear"></button>
+
+          <label class="pill" style="display:flex;align-items:center;gap:8px;">
+            <input id="sortToggle" type="checkbox" />
+            <span data-i18n="tool.toggle.sort_keys"></span>
+          </label>
+
+          <label class="pill" style="display:flex;align-items:center;gap:8px;">
+            <span data-i18n="tool.indent.label"></span>
+            <select id="indentSelect" class="pill" aria-label="Indent">
+              <option value="2" data-i18n="tool.indent.two">2 spaces</option>
+              <option value="4" data-i18n="tool.indent.four">4 spaces</option>
+            </select>
+          </label>
+        </div>
+
+        <div id="statusBox" class="status" role="status" aria-live="polite"></div>
+        <small class="note" data-i18n="tool.note.privacy"></small>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="card-inner">
+        <label class="label" for="jsonOutput" data-i18n="tool.output_label"></label>
+        <textarea id="jsonOutput" readonly></textarea>
+
+        <div class="controls">
+          <button id="btnCopy" type="button" data-i18n="tool.btn.copy"></button>
+          <button id="btnDownload" type="button" data-i18n="tool.btn.download"></button>
+        </div>
+
+        <div id="tocHost"></div>
+      </div>
+    </section>
+  </div>
+
+  <section class="content" id="contentHost"></section>
+</main>
+
+<footer>
+  <div class="container">
+    <div>© JSON Formatter & Validator</div>
+    <div class="footer-links" aria-label="Footer">
+      <a href="privacy.html" data-i18n="footer.privacy"></a>
+      <a href="terms.html" data-i18n="footer.terms"></a>
+      <a href="disclaimer.html" data-i18n="footer.disclaimer"></a>
+      <a href="contact.html" data-i18n="footer.contact"></a>
+      <a href="about.html" data-i18n="footer.about"></a>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/i18n.js"></script>
+<script src="assets/app.js"></script>
+
+<!-- Schema.org JSON-LD (English; keep canonical stable) -->
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"BreadcrumbList",
+      "itemListElement":[
+        {"@type":"ListItem","position":1,"name":"Home","item":"https://mikanntool.com/"},
+        {"@type":"ListItem","position":2,"name":"Tools","item":"https://mikanntool.com/tools/"},
+        {"@type":"ListItem","position":3,"name":"JSON Formatter & Validator","item":"https://mikanntool.com/tools/json-formatter-validator/"}
+      ]
+    },
+    {
+      "@type":"SoftwareApplication",
+      "name":"JSON Formatter & Validator",
+      "applicationCategory":"DeveloperApplication",
+      "operatingSystem":"All",
+      "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
+      "url":"https://mikanntool.com/tools/json-formatter-validator/",
+      "description":"Format and validate JSON in your browser. Pretty print, minify, sort keys, and locate errors by line/column."
+    },
+    {
+      "@type":"FAQPage",
+      "mainEntity":[
+        {"@type":"Question","name":"Is this JSON tool private?","acceptedAnswer":{"@type":"Answer","text":"Yes. Formatting and validation run locally in your browser. Your input is not sent to a server."}},
+        {"@type":"Question","name":"Why does my JSON fail with trailing commas?","acceptedAnswer":{"@type":"Answer","text":"Strict JSON does not allow trailing commas. Remove the final comma before a closing ] or }."}},
+        {"@type":"Question","name":"What does “Unexpected token” mean?","acceptedAnswer":{"@type":"Answer","text":"It means the parser found a character that is not allowed at that location (often an unquoted key, single quotes, or an extra comma)."}},
+        {"@type":"Question","name":"Can JSON contain comments?","acceptedAnswer":{"@type":"Answer","text":"No. Standard JSON does not support // or /* */ comments. Use a different format (like JSONC) only where explicitly supported."}},
+        {"@type":"Question","name":"Does JSON allow NaN or Infinity?","acceptedAnswer":{"@type":"Answer","text":"No. JSON numbers must be finite. Use null or a string if you need to represent those values."}},
+        {"@type":"Question","name":"How do I find the exact error location?","acceptedAnswer":{"@type":"Answer","text":"This tool shows line/column (and character position) when the browser provides an error position."}},
+        {"@type":"Question","name":"What is the difference between formatting and minifying?","acceptedAnswer":{"@type":"Answer","text":"Formatting adds whitespace and indentation for readability. Minifying removes whitespace to reduce size."}},
+        {"@type":"Question","name":"Will sorting keys change the meaning?","acceptedAnswer":{"@type":"Answer","text":"For typical JSON objects, key order should not matter, but some systems may compare raw text. Only enable sorting when safe for your workflow."}},
+        {"@type":"Question","name":"Can I validate against a JSON Schema here?","acceptedAnswer":{"@type":"Answer","text":"This tool validates strict JSON syntax. Schema validation is a separate step (JSON Schema) and is planned as a related tool."}},
+        {"@type":"Question","name":"What encodings are safe?","acceptedAnswer":{"@type":"Answer","text":"UTF-8 is the standard choice for JSON. Avoid ambiguous encodings when sending JSON to APIs."}}
+      ]
+    }
+  ]
+}
+</script>
+</body>
+</html>

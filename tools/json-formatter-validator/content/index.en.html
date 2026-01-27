@@ -1,0 +1,364 @@
+<h2>Quick answer</h2>
+<p>
+If your JSON is failing, the fastest fix is usually one of these: remove trailing commas, quote all object keys, use double quotes (not single quotes),
+and make sure brackets/braces match. Paste your JSON on the left, click <strong>Validate</strong>, and the tool will report the error (often with line/column).
+Then click <strong>Format</strong> to produce a readable version or <strong>Minify</strong> to compress it for transport.
+</p>
+
+<h2>How to use this tool</h2>
+<ol>
+  <li><strong>Paste JSON</strong> into the input box. If you want a known-good example, click <strong>Load sample</strong>.</li>
+  <li>Click <strong>Validate</strong> to check strict JSON syntax. If invalid, you’ll see an error message and (when available) line/column.</li>
+  <li>Click <strong>Format</strong> to pretty-print the JSON with indentation, or <strong>Minify</strong> to remove whitespace.</li>
+  <li>Enable <strong>Sort object keys</strong> only if your workflow is safe with reordered keys (some systems compare raw text).</li>
+  <li>Use <strong>Copy output</strong> or <strong>Download</strong> to save results. Input is saved locally in your browser for convenience.</li>
+</ol>
+<p class="muted">
+Privacy note: everything runs locally in your browser. This is designed to be safe for API payloads and configs you do not want to upload to a server.
+</p>
+
+<h2>What “valid JSON” really means</h2>
+<p>
+A lot of “JSON-like” text on the internet is not actually valid JSON. Standard JSON is defined by formal specifications (RFC 8259 and ECMA-404),
+and strict parsers (like <code>JSON.parse</code>) enforce these rules. Understanding the rules saves time because the same mistakes repeat across
+API debugging, configuration files, and data exports.
+</p>
+
+<h3>Rule 1: JSON has only these data types</h3>
+<ul>
+  <li><strong>Object</strong>: <code>{ "key": "value" }</code></li>
+  <li><strong>Array</strong>: <code>[1, 2, 3]</code></li>
+  <li><strong>String</strong>: <code>"text"</code> (double quotes only)</li>
+  <li><strong>Number</strong>: <code>0</code>, <code>-12.34</code>, <code>1e6</code> (finite numbers only)</li>
+  <li><strong>Boolean</strong>: <code>true</code> / <code>false</code></li>
+  <li><strong>Null</strong>: <code>null</code></li>
+</ul>
+<p>
+If you see <code>undefined</code>, <code>NaN</code>, <code>Infinity</code>, function bodies, or dates written like <code>new Date()</code>,
+that’s JavaScript (or another language), not JSON.
+</p>
+
+<h3>Rule 2: Object keys must be strings in double quotes</h3>
+<p>
+This fails in strict JSON:
+</p>
+<pre><code>{ name: "Alice" }</code></pre>
+<p>
+This is correct:
+</p>
+<pre><code>{ "name": "Alice" }</code></pre>
+
+<h3>Rule 3: Strings must use double quotes</h3>
+<p>
+Single quotes are common in examples, but strict JSON does not allow them:
+</p>
+<pre><code>{ "name": 'Alice' }</code></pre>
+<p>
+Use:
+</p>
+<pre><code>{ "name": "Alice" }</code></pre>
+
+<h3>Rule 4: No trailing commas</h3>
+<p>
+Trailing commas are one of the top causes of “it looks fine but won’t parse”.
+This is invalid:
+</p>
+<pre><code>{
+  "a": 1,
+}</code></pre>
+<p>
+So is this:
+</p>
+<pre><code>[1, 2, 3,]</code></pre>
+<p>
+Fix by removing the final comma before <code>}</code> or <code>]</code>.
+</p>
+
+<h3>Rule 5: Comments are not allowed</h3>
+<p>
+JSON does not support <code>//</code> or <code>/* */</code>. Some editors support “JSONC” (JSON with comments),
+but APIs and strict parsers will reject it. If your toolchain requires comments, store them outside the JSON (docs, README),
+or use a format that explicitly supports comments.
+</p>
+
+<h3>Rule 6: Encoding and escaping matter</h3>
+<p>
+JSON is typically transmitted as UTF-8. Most issues come from accidentally breaking strings:
+unescaped newline characters, unescaped quotes, or invalid backslashes.
+A backslash starts an escape sequence. For example, Windows paths often break because <code>\U</code> or <code>\n</code> is read as an escape.
+If you need a literal backslash, escape it: <code>"C:\\Users\\Alice\\file.txt"</code>.
+</p>
+
+<h2>Step-by-step fixes for common errors</h2>
+<p>
+When you see an error like “Unexpected token …”, don’t guess. Fix systematically:
+</p>
+<ol>
+  <li><strong>Validate</strong> first. Read the message and locate the position (line/column if provided).</li>
+  <li><strong>Check the character at that spot</strong>: is it an extra comma, missing quote, or wrong bracket?</li>
+  <li><strong>Confirm structure</strong>: every <code>{</code> must close with <code>}</code>, every <code>[</code> with <code>]</code>.</li>
+  <li><strong>Fix one thing at a time</strong>, then validate again. Multiple changes at once makes debugging harder.</li>
+</ol>
+
+<h3>“Unexpected token o in JSON at position …”</h3>
+<p>
+This classic error often appears when you are parsing something that is already an object (not a string) in JavaScript,
+or when you accidentally feed the parser non-JSON text like <code>ok</code>, <code>error</code>, or an HTML page.
+In a tool like this, it usually means your JSON starts with a character that’s not valid JSON.
+Valid JSON must start with <code>{</code>, <code>[</code>, <code>"</code>, a digit/minus, <code>true</code>, <code>false</code>, or <code>null</code>.
+</p>
+
+<h3>“Unexpected string”</h3>
+<p>
+Often caused by missing commas between properties:
+</p>
+<pre><code>{
+  "a": 1
+  "b": 2
+}</code></pre>
+<p>
+Add a comma after <code>1</code>.
+</p>
+
+<h3>“Unexpected end of JSON input”</h3>
+<p>
+This means the parser reached the end while still expecting something:
+a closing brace/bracket, a quote, or a value. Typical causes:
+</p>
+<ul>
+  <li>Missing <code>}</code> or <code>]</code></li>
+  <li>Unclosed string: <code>"name": "Alice</code></li>
+  <li>Cut-off payload (copy/paste truncated)</li>
+</ul>
+
+<h3>Broken strings (quotes, newlines, backslashes)</h3>
+<p>
+If your JSON includes large text blocks, stack traces, or multi-line content, make sure newlines are escaped
+as <code>\n</code> inside strings, and that embedded quotes are escaped as <code>\"</code>.
+If you paste raw logs directly inside a JSON string without escaping, it will fail.
+</p>
+
+<h2>Best practices that prevent future pain</h2>
+<p>
+Valid JSON is the minimum. For real systems, consistency and safety matter too:
+</p>
+
+<h3>Use consistent indentation</h3>
+<p>
+Pick 2 or 4 spaces and stay consistent across a repository. Consistent formatting reduces merge conflicts and makes diffs readable.
+</p>
+
+<h3>Keep numbers precise (especially IDs)</h3>
+<p>
+JavaScript (and many tools) use IEEE-754 double precision for numbers. Very large integers can lose precision.
+If you have IDs like <code>12345678901234567890</code>, store them as strings:
+<code>"id": "12345678901234567890"</code>. This prevents accidental rounding.
+</p>
+
+<h3>Don’t rely on object key order</h3>
+<p>
+In JSON semantics, object key order is not significant. Some systems preserve order, but you should not depend on it unless the consumer explicitly says so.
+If order matters, use arrays.
+</p>
+
+<h3>Prefer explicit nulls over missing keys (when contract matters)</h3>
+<p>
+For APIs and configs, decide whether “missing” and “null” are different. If they are, document the contract.
+If you always include the key but allow it to be null, downstream code can be simpler.
+</p>
+
+<h3>Keep JSON small and split when necessary</h3>
+<p>
+Giant JSON blobs are hard to debug. If you control the format, split the payload into smaller objects or files,
+and validate each part independently.
+</p>
+
+<h3>Use JSON Schema when structure matters</h3>
+<p>
+Syntax validation only answers “is this JSON?”. JSON Schema answers “is this the right shape?”:
+required fields, types, enumerations, min/max, and more. For serious integrations, schema validation catches bugs earlier.
+This tool focuses on strict JSON syntax; schema validation is a separate step.
+</p>
+
+<h2>Security & privacy notes</h2>
+<p>
+This tool is designed to run fully in the browser. That means your JSON stays on your device.
+Still, be careful with sensitive payloads: if your browser has extensions that read pages, they could access input fields.
+For highly sensitive data, use a clean browser profile and avoid unknown extensions.
+</p>
+
+<h2>Examples (8+)</h2>
+<p class="muted">Each example shows input → formatted output. You can paste inputs into the tool and click Format.</p>
+
+<h3>Example 1: Simple object</h3>
+<pre><code>Input:
+{"name":"Alice","active":true,"age":29}
+
+Output:
+{
+  "name": "Alice",
+  "active": true,
+  "age": 29
+}</code></pre>
+
+<h3>Example 2: Nested arrays</h3>
+<pre><code>Input:
+{"tags":["json","format","validate"],"scores":[1,2,3]}
+
+Output:
+{
+  "tags": [
+    "json",
+    "format",
+    "validate"
+  ],
+  "scores": [
+    1,
+    2,
+    3
+  ]
+}</code></pre>
+
+<h3>Example 3: Escaped quotes</h3>
+<pre><code>Input:
+{"message":"She said: \"hello\"."}
+
+Output:
+{
+  "message": "She said: \"hello\"."
+}</code></pre>
+
+<h3>Example 4: Windows path escaping</h3>
+<pre><code>Input:
+{"path":"C:\\Users\\Alice\\Documents\\file.txt"}
+
+Output:
+{
+  "path": "C:\\Users\\Alice\\Documents\\file.txt"
+}</code></pre>
+
+<h3>Example 5: Booleans and null</h3>
+<pre><code>Input:
+{"ok":false,"value":null,"enabled":true}
+
+Output:
+{
+  "ok": false,
+  "value": null,
+  "enabled": true
+}</code></pre>
+
+<h3>Example 6: API-style payload</h3>
+<pre><code>Input:
+{"user":{"id":"12345678901234567890","name":"Aki"},"roles":["admin","editor"]}
+
+Output:
+{
+  "user": {
+    "id": "12345678901234567890",
+    "name": "Aki"
+  },
+  "roles": [
+    "admin",
+    "editor"
+  ]
+}</code></pre>
+
+<h3>Example 7: Trailing comma (invalid → fix)</h3>
+<pre><code>Invalid input:
+{"a":1,"b":2,}
+
+Fix:
+{"a":1,"b":2}</code></pre>
+
+<h3>Example 8: Missing comma (invalid → fix)</h3>
+<pre><code>Invalid input:
+{"a":1 "b":2}
+
+Fix:
+{"a":1,"b":2}</code></pre>
+
+<h2>Troubleshooting (10+)</h2>
+<ul>
+  <li><strong>Trailing comma</strong>: remove the comma before <code>}</code> or <code>]</code>.</li>
+  <li><strong>Single quotes</strong>: replace <code>'</code> with <code>"</code> for strings and keys.</li>
+  <li><strong>Unquoted keys</strong>: change <code>{ name: "x" }</code> to <code>{ "name": "x" }</code>.</li>
+  <li><strong>Comments present</strong>: remove <code>//</code> or <code>/* */</code> blocks.</li>
+  <li><strong>Unescaped backslash</strong>: escape as <code>\\</code> inside strings.</li>
+  <li><strong>Unescaped newline in string</strong>: use <code>\n</code> instead of an actual newline.</li>
+  <li><strong>Cut-off JSON</strong>: ensure copy/paste includes the final closing bracket/brace.</li>
+  <li><strong>Wrong bracket type</strong>: arrays use <code>[]</code>, objects use <code>{}</code>.</li>
+  <li><strong>Invalid numbers</strong>: JSON does not allow <code>NaN</code> or <code>Infinity</code>.</li>
+  <li><strong>Encoding issues</strong>: prefer UTF-8 when saving JSON files; avoid exotic encodings.</li>
+</ul>
+
+<h2>FAQ (10+)</h2>
+<dl>
+  <dt><strong>Is this tool private?</strong></dt>
+  <dd>Yes. JSON formatting and validation run locally in your browser. No input is sent to a server.</dd>
+
+  <dt><strong>Why can’t I use comments?</strong></dt>
+  <dd>Standard JSON has no comment syntax. Some environments support JSONC, but strict parsers will reject it.</dd>
+
+  <dt><strong>Why do trailing commas fail?</strong></dt>
+  <dd>Strict JSON disallows trailing commas. Remove them before <code>}</code> or <code>]</code>.</dd>
+
+  <dt><strong>What’s the difference between Format and Minify?</strong></dt>
+  <dd>Format adds whitespace/indentation for readability. Minify removes whitespace to reduce size.</dd>
+
+  <dt><strong>Does sorting keys change my data?</strong></dt>
+  <dd>It should not change meaning, but it changes raw text. Some systems compare raw JSON strings, so use with care.</dd>
+
+  <dt><strong>Can I validate against JSON Schema here?</strong></dt>
+  <dd>This tool validates strict JSON syntax. Schema validation is a separate step and is planned as a related tool.</dd>
+
+  <dt><strong>Why does my ID number change?</strong></dt>
+  <dd>Large integers can lose precision in some tools. Store large IDs as strings.</dd>
+
+  <dt><strong>Can JSON contain dates?</strong></dt>
+  <dd>JSON has no date type. Use ISO 8601 strings (e.g., <code>"2026-01-27T12:34:56Z"</code>) and document it.</dd>
+
+  <dt><strong>What content type should I use for APIs?</strong></dt>
+  <dd>Typically <code>Content-Type: application/json; charset=utf-8</code>.</dd>
+
+  <dt><strong>Why do I see “Unexpected end of JSON input”?</strong></dt>
+  <dd>Your JSON is incomplete: missing a closing bracket/brace or an unclosed string.</dd>
+</dl>
+
+<h2>Glossary (10+)</h2>
+<ul>
+  <li><strong>JSON</strong>: JavaScript Object Notation, a text format for data exchange.</li>
+  <li><strong>Object</strong>: Key-value mapping in braces <code>{}</code>.</li>
+  <li><strong>Array</strong>: Ordered list in brackets <code>[]</code>.</li>
+  <li><strong>String</strong>: Text value in double quotes.</li>
+  <li><strong>Escape sequence</strong>: Backslash-based encoding like <code>\n</code>, <code>\"</code>, <code>\\</code>.</li>
+  <li><strong>Minify</strong>: Remove whitespace to reduce size.</li>
+  <li><strong>Pretty print</strong>: Add whitespace and indentation for readability.</li>
+  <li><strong>Schema</strong>: A formal definition of expected JSON structure (JSON Schema).</li>
+  <li><strong>UTF-8</strong>: Common encoding used for JSON text.</li>
+  <li><strong>Trailing comma</strong>: Extra comma after the last element/property (invalid in JSON).</li>
+</ul>
+
+<h2>Related tools (5)</h2>
+<ul>
+  <li><strong>JSON to CSV Converter</strong> — Convert arrays/objects into CSV for spreadsheets. (Anchor: <em>JSON to CSV converter</em>)</li>
+  <li><strong>CSV to JSON Converter</strong> — Turn CSV into JSON arrays with column mapping. (Anchor: <em>CSV to JSON</em>)</li>
+  <li><strong>JSON Schema Validator</strong> — Validate data shape with JSON Schema rules. (Anchor: <em>JSON Schema validator</em>)</li>
+  <li><strong>JWT Decoder</strong> — Decode JWT payload JSON safely in-browser. (Anchor: <em>JWT decode</em>)</li>
+  <li><strong>Base64 Encoder/Decoder</strong> — Encode/decode API payload fragments. (Anchor: <em>Base64 decode</em>)</li>
+</ul>
+
+<h2>Popular tools</h2>
+<ul>
+  <li><a href="./">JSON Formatter & Validator</a></li>
+  <li><a href="all-tools.html">All Tools</a></li>
+</ul>
+
+<h2>References (official docs)</h2>
+<ul>
+  <li><a href="https://www.rfc-editor.org/rfc/rfc8259" rel="nofollow">RFC 8259 — The JSON Data Interchange Format</a></li>
+  <li><a href="https://www.ecma-international.org/publications-and-standards/standards/ecma-404/" rel="nofollow">ECMA-404 — The JSON Data Interchange Syntax</a></li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse" rel="nofollow">MDN: JSON.parse</a></li>
+  <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" rel="nofollow">MDN: JSON.stringify</a></li>
+  <li><a href="https://json-schema.org/" rel="nofollow">JSON Schema (official site)</a></li>
+</ul>
