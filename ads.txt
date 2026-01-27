@@ -1,2 +1,3 @@
 # AdSense 承認後に、あなたの Publisher ID（pub-xxxxxxxxxxxxxxxx）に置き換えます
-google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
+google.com, pub-5643751507480712, DIRECT, f08c47fec0942fa0
+
