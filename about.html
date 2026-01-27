@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>運営者情報 | Mikanntool Docs</title>
+  <meta name="description" content="このサイトの目的、運営方針、更新方針。" />
+  <link rel="canonical" href="https://mikanntool.com/about.html" />
+  <style>
+    :root { --text:#e8ecff; --muted:#a9b3e6; --line:#22305f; --link:#9bb6ff; }
+    body{ margin:0; font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans JP",sans-serif; background:#0b1020; color:var(--text); }
+    a{ color:var(--link); text-decoration:none; } a:hover{ text-decoration:underline; }
+    header{ border-bottom:1px solid var(--line); background:rgba(10,14,28,.9); position:sticky; top:0; backdrop-filter:blur(10px); }
+    .wrap{ max-width:980px; margin:0 auto; padding:18px 16px; }
+    nav{ display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
+    .brand{ font-weight:700; margin-right:10px; }
+    .pill{ padding:8px 10px; border:1px solid var(--line); border-radius:999px; background:rgba(18,26,51,.5); }
+    .box{ margin-top:14px; padding:16px; border:1px solid var(--line); border-radius:14px; background:rgba(18,26,51,.45); }
+    h1{ margin:0 0 6px; font-size:20px; }
+    .muted{ color:var(--muted); }
+    footer{ border-top:1px solid var(--line); color:var(--muted); padding:18px 0 30px; margin-top:28px; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <nav>
+      <div class="brand"><a href="index.html">Mikanntool Docs</a></div>
+      <a class="pill" href="guides.html">ガイド</a>
+      <a class="pill" href="about.html">運営者情報</a>
+      <a class="pill" href="contact.html">お問い合わせ</a>
+      <a class="pill" href="privacy.html">プライバシー</a>
+      <a class="pill" href="terms.html">利用規約・免責</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <h1>運営者情報</h1>
+
+  <section class="box">
+    <p class="muted">
+      本サイトは、Web運用に必要な最低限の知識と手順を、再現できる形で整理することを目的に運営しています。
+      読者が迷いがちなポイント（どの画面で何を押すか、どこを触ると事故るか）を優先して書きます。
+    </p>
+    <p class="muted">
+      免責やプライバシーに関する情報は、常にメニューとフッターから到達できる位置に固定しています。
+      これはユーザーが安心して閲覧できることを第一にするためです。
+    </p>
+  </section>
+
+  <section class="box">
+    <h2 style="margin:0 0 8px; font-size:16px;">更新方針</h2>
+    <ul class="muted" style="margin:0; padding-left:20px;">
+      <li>手順の変更があれば、該当ページを優先して修正します</li>
+      <li>外部リンクは、可能な限り公式ドキュメントを参照します</li>
+      <li>誤りの指摘は「お問い合わせ」から受け付けます</li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="muted">重要ページ： <a href="privacy.html">プライバシー</a> / <a href="terms.html">利用規約・免責</a> / <a href="contact.html">お問い合わせ</a></div>
+  </div>
+</footer>
+</body>
+</html>
